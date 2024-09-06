@@ -16,12 +16,31 @@ public class Board : MonoBehaviour
 
     private Row[] rows;
 
+    private string[] solutions;
+    private string[] validWords;
+
     private int rowIndex;
     private int columnIndex;
 
     private void Awake()
     {
         rows = GetComponentsInChildren<Row>();  
+    }
+
+    private void Start()
+    {
+        LoadData();
+
+    }
+
+    private void LoadData()
+    {
+        TextAsset textFile = Resources.Load("official_wordle_all") as TextAsset;
+        validWords = textFile.text.Split('\n');
+
+        textFile = Resources.Load("official_wordle_common") as TextAsset;
+        solutions = textFile.text.Split('\n');
+
     }
     private void Update()
     {
@@ -36,7 +55,10 @@ public class Board : MonoBehaviour
 
         else if (columnIndex >= rows[rowIndex].tiles.Length)
         {
-
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                SubmitRow(currentRow);
+            }
         }
         else
         {
@@ -54,4 +76,10 @@ public class Board : MonoBehaviour
 
         }
     }
+
+    private void SubmitRow(Row row)
+    {
+
+    }
+
 }
