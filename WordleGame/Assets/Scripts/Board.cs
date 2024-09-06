@@ -18,6 +18,7 @@ public class Board : MonoBehaviour
 
     private string[] solutions;
     private string[] validWords;
+    private string word;
 
     private int rowIndex;
     private int columnIndex;
@@ -30,6 +31,7 @@ public class Board : MonoBehaviour
     private void Start()
     {
         LoadData();
+        SetRandomWord();
 
     }
 
@@ -41,6 +43,12 @@ public class Board : MonoBehaviour
         textFile = Resources.Load("official_wordle_common") as TextAsset;
         solutions = textFile.text.Split('\n');
 
+    }
+       
+    private void SetRandomWord()
+    {
+        word = solutions[Random.Range(0, solutions.Length)];
+        word = word.ToLower().Trim();
     }
     private void Update()
     {
@@ -79,7 +87,31 @@ public class Board : MonoBehaviour
 
     private void SubmitRow(Row row)
     {
+        for (int i = 0; i < row.tiles.Length; i++)
+        {
+            Tile tile  = row.tiles[i];
 
+            if (tile.letter == word[i])
+            {
+                //correct state
+            }
+            else if (word.Contains(tile.letter))
+            {
+                //wrong spot
+            }
+            else
+            {
+                //incorrect
+            }
+        }
+
+        rowIndex++;
+        columnIndex = 0;
+
+        if(rowIndex >= rows.Length)
+        {
+            enabled = false;
+        }
     }
 
 }
