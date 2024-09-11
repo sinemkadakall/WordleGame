@@ -1119,10 +1119,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emptyState:
-    fillColor: {r: 0, g: 0, b: 0, a: 0}
+    fillColor: {r: 0, g: 0, b: 0, a: 0.39215687}
     outlineColor: {r: 0.22745098, g: 0.22745098, b: 0.23529412, a: 0.39215687}
   occupiedState:
-    fillColor: {r: 0, g: 0, b: 0, a: 0}
+    fillColor: {r: 0, g: 0, b: 0, a: 0.39215687}
     outlineColor: {r: 0.3372549, g: 0.34117648, b: 0.34509805, a: 0.39215687}
   correctState:
     fillColor: {r: 0.3254902, g: 0.5529412, b: 0.30588236, a: 0.39215687}

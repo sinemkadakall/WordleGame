@@ -59,6 +59,7 @@ public class Board : MonoBehaviour
     {
         word = solutions[Random.Range(0, solutions.Length)];
         word = word.ToLower().Trim();
+        word = "games";
     }
     private void Update()
     {
@@ -98,26 +99,49 @@ public class Board : MonoBehaviour
 
     private void SubmitRow(Row row)
     {
+        string reaminig = word;
+
         for (int i = 0; i < row.tiles.Length; i++)
         {
-            Tile tile  = row.tiles[i];
+            Tile tile = row.tiles[i];
 
             if (tile.letter == word[i])
             {
                 tile.setState(correctState);
-                //correct state
+                reaminig = reaminig.Remove(i, 1);
+                reaminig = reaminig.Insert(i," ");
+                
             }
-            else if (word.Contains(tile.letter))
-            {
-                tile.setState(wrongSpotState);
-                //wrong spot
-            }
-            else
+            else if (!word.Contains(tile.letter))
             {
                 tile.setState(incorrectState);
-                //incorrect
+              
             }
         }
+
+        for (int i = 0; i < row.tiles.Length; i++)
+        {
+            Tile tile = row.tiles[i];
+
+            if(tile.state != correctState && tile.state != incorrectState)
+            {
+                if (reaminig.Contains(tile.letter))
+                {
+                    tile.setState(wrongSpotState);
+
+                    int index = reaminig.IndexOf(tile.letter);
+                    reaminig = reaminig.Remove(i, 1);
+                    reaminig = reaminig.Insert(i, " ");
+                }
+                else
+                {
+                    tile.setState(incorrectState);
+                }
+            }
+
+
+        }
+
 
         rowIndex++;
         columnIndex = 0;
