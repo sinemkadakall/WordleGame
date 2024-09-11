@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using TMPro;
 using UnityEngine;
 
 public class Board : MonoBehaviour
@@ -30,6 +31,8 @@ public class Board : MonoBehaviour
     public Tile.State wrongSpotState;
     public Tile.State incorrectState;
 
+    [Header("UI")]
+    public GameObject invalidWordText;
 
 
 
@@ -68,8 +71,12 @@ public class Board : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
             columnIndex = Mathf.Max(columnIndex -1,0);
+            
+
             currentRow.tiles[columnIndex].setLetter('\0');
             currentRow.tiles[columnIndex].setState(emptyState);
+
+            invalidWordText.gameObject.SetActive(false);
         }
 
         else if (columnIndex >= rows[rowIndex].tiles.Length)
@@ -99,6 +106,11 @@ public class Board : MonoBehaviour
 
     private void SubmitRow(Row row)
     {
+        if (!IsValidWord(row.word))
+        {
+            invalidWordText.gameObject.SetActive(true);
+            return;
+        }
         string reaminig = word;
 
         for (int i = 0; i < row.tiles.Length; i++)
@@ -142,7 +154,6 @@ public class Board : MonoBehaviour
 
         }
 
-
         rowIndex++;
         columnIndex = 0;
 
@@ -152,5 +163,15 @@ public class Board : MonoBehaviour
 
         }
     }
-
+    private bool IsValidWord(string word)
+    {
+        for (int i = 0; i < validWords.Length; i++)
+        {
+            if (validWords[i] == word)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
